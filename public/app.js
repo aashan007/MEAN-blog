@@ -5,11 +5,40 @@
 
     function BlogController($scope,$http){
       $scope.createPost=createPost;
+      $scope.deletePost=deletePost;
+      $scope.editPost=editPost;
 
       function init(){
       getAllPosts();
        }
     init();
+
+    function editPost(postId){
+        $http.get("/api/blogpost/"+postId)
+              .then(
+                function(post)
+                {
+                  $scope.post=post;
+                },
+                function(err){
+
+                }
+              );
+    }
+    function deletePost(postId)
+    {
+      $http.delete("/api/blogpost/"+postId)
+           .then(
+              function(success)
+                {getAllPosts();
+                },
+                function(err){
+
+                }
+
+      );
+
+    }
 
       function getAllPosts(){
         $http
