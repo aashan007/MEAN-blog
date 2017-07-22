@@ -7,18 +7,39 @@
       $scope.createPost=createPost;
       $scope.deletePost=deletePost;
       $scope.editPost=editPost;
+      $scope.updatePost=updatePost;
 
       function init(){
       getAllPosts();
        }
     init();
 
+    function updatePost(post){
+      console.log(post);
+      $http
+      .put("/api/blogspot/"+post._id,post)
+      .then(
+         function(success)
+           {getAllPosts();
+           },
+           function(err){
+
+           }
+
+ );
+
+
+    }
+
     function editPost(postId){
-        $http.get("/api/blogpost/"+postId)
+        $http
+              .get("/api/blogpost/"+postId)
               .then(
-                function(post)
+
+              function(post)
                 {
-                  $scope.post=post;
+
+                  $scope.post=post.data;
                 },
                 function(err){
 
@@ -27,7 +48,8 @@
     }
     function deletePost(postId)
     {
-      $http.delete("/api/blogpost/"+postId)
+      $http
+          .delete("/api/blogpost/"+postId)
            .then(
               function(success)
                 {getAllPosts();

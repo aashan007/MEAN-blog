@@ -24,6 +24,25 @@ app.post("/api/blogpost",createPost);
 app.get("/api/blogpost",getAllPosts);
 app.get("/api/blogpost/:id",getPostById);
 app.delete("/api/blogpost/:id",deletePost);
+app.put("/api/blogspot/:id",updatePost);
+
+function updatePost(req,res){
+  var postId=req.params.id;
+  var post=req.body;
+  PostModel
+      .update({_id:postId},{
+        title:post.title,
+        body:post.body
+      })
+      .then(
+        function(status){
+          res.sendStatus(200);
+        },
+        function(err){
+          res.sendStatus(400);
+        }
+      );
+}
 
 function getPostById(req,res){
   var postId=req.params.id;
